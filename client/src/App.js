@@ -7,19 +7,22 @@ import {socket, socketReconnect} from './socket/handler.js';
 import {isShortcutLocked} from './shortcutLocker.js';
 
 // Components
+import Lobby from './lobbyComponents/lobby/lobby.js';
+import SetPseudo from './lobbyComponents/setPseudo/setPseudo.js';
 
 
 // Render App
 function App() {
-  const [gameLaunched, setGameLaunched] = useState(false);
+  // States
+  const [gameState, setGameState] = useState(0); // 0 : pseudo sel / 1 : lobby / 2 : in game
+  const [pseudo, setPseudo] = useState("");
+
 
   // Key actions
   const keyPressHandler = (event) => {
     if (event.code === "F5" || event.code === "F11" || event.code === "F12") return;
     if (isShortcutLocked() && event.code !== "Enter") return;
     if(event.ctrlKey && event.shiftKey && (event.key === 'i' || event.key === 'I')) return;
-
-    event.preventDefault();
   };
   // Warning on unload
   const unloadWarning = (event) => {
@@ -41,10 +44,24 @@ function App() {
 
 
   // RENDER
-  return (
-    <div id="App">
-      
-    </div>
-  );
+  if(gameState === 0) { // PSEUDO
+    return (
+      <div id="App">
+        <div id="blurWind"></div>
+  
+        <SetPseudo pseudo={pseudo} setPseudo={setPseudo} validPseudo={() => {setGameState(1);}}/>
+      </div>
+    );
+  } else if(gameState === 1) { // LOBBY
+    return (
+      <div id="App">
+        <div id="blurWind"></div>
+  
+        <Lobby socket={socket} returnToPseudo={() => {setGameState(0);}}/>
+      </div>
+    );
+  } else { // IN GAME
+
+  }
 }
 export default App;

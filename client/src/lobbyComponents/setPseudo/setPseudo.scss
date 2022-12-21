@@ -1,0 +1,86 @@
+#SetPseudo {
+    position: absolute;
+    box-sizing: border-box;
+    width: 54vw;
+    height: 40vh;
+    top: 30vh;
+    left: 23vw;
+    z-index: 3;
+    border-radius: 1vh;
+    
+    border: 0.2vh solid rgba(255, 255, 255, 0.18);
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0));
+    -webkit-backdrop-filter: blur(var(--blurBack));
+    backdrop-filter: blur(var(--blurBack));
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+
+
+    // Title with players nb
+    #titlePseudo {
+        display: block;
+        box-sizing: border-box;
+        width: 100%;
+        height: 10vh;
+        border-top-left-radius: 0.6vh;
+        border-top-right-radius: 0.6vh;
+        font-size: 6vh;
+        line-height: 6vh;
+        font-weight: bold;
+        margin-top: 5vh;
+        font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    }
+
+
+    // Pseudo input
+    #inputPseudo {
+        display: block;
+        box-sizing: border-box;
+        width: 100%;
+        height: 10vh;
+        text-align: center;
+
+        input {
+            width: 40%;
+            height: 60%;
+            padding-left: 1vw;
+            font-size: 3vh;
+        }
+    }
+
+
+    // Valid div
+    #validPseudo {
+        display: block;
+        box-sizing: border-box;
+        width: 100%;
+        height: 10vh;
+        text-align: center;
+
+        button {
+            width: 50%;
+            height: 90%;
+            font-size: 5vh;
+            font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+
+            background-size: 240% auto;
+            transition: 0.5s;
+            background-image: linear-gradient(to right, #66df16 0%, #1d8e0e  51%, #1fa30d  100%);
+
+            &:hover {
+                background-position: right center;
+                color: #fff;
+                text-decoration: none;
+            }
+
+            &:disabled {
+                background: green;
+                color: rgba(0, 0, 0, 0.3);
+                cursor: default;
+
+                &:hover {
+                    color: rgba(0, 0, 0, 0.3);
+                }
+            }
+        }
+    }
+}
