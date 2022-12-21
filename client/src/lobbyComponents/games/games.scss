@@ -13,7 +13,7 @@
         box-sizing: border-box;
         width: 100%;
         height: 5.5vh;
-        font-size: 3vh;
+        font-size: 4vh;
         line-break: auto;
         line-height: 6vh;
         color: white;
@@ -41,6 +41,35 @@
                 color: rgb(255, 255, 255);
                 text-decoration: none;
             }
+
+            &:disabled {
+                background: lightgray;
+                color: rgba(0, 0, 0, 0.7);
+                cursor: default;
+            }
         }
+    }
+
+
+    // Create game part
+    .createGame {
+        display: block;
+        box-sizing: border-box;
+        width: 100%;
+        height: 66%;
+        text-align: center;
+
+        button {
+            width: 60%;
+            height: 95%;
+            font-size: 10vh;
+            line-height: 10vh;
+        }
+    }
+
+
+    // Game you're in
+    &.joined {
+        background-color: rgb(91, 217, 91);
     }
 }

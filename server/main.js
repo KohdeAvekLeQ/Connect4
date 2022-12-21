@@ -11,17 +11,18 @@ const io = new Server({
 });
 
 
+// API
+const LobbyAPI = require('./api/lobbyAPI.js');
+
+
 // On new client
 io.on("connection", (socket) => {
     // Log connection
     console.log(`New Client : ${socket.handshake.address}`);
     
-    
-    
 
-    // ------ EVENTS ------
-    
-    // --------------------
+    // APIs
+    let lobbyAPI = new LobbyAPI(socket, io);
 
 
     // On disconnection

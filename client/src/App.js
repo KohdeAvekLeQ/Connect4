@@ -57,7 +57,7 @@ function App() {
       <div id="App">
         <div id="blurWind"></div>
   
-        <Lobby socket={socket} returnToPseudo={() => {setGameState(0);}}/>
+        <Lobby pseudo={pseudo} socket={socket} returnToPseudo={() => {setGameState(0);}}/>
       </div>
     );
   } else { // IN GAME
