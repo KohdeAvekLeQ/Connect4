@@ -9,15 +9,20 @@ import {isShortcutLocked} from './shortcutLocker.js';
 // Components
 import Lobby from './lobbyComponents/lobby/lobby.js';
 import SetPseudo from './lobbyComponents/setPseudo/setPseudo.js';
+import Grid from './gameComponents/grid/grid.js';
+import Player from './gameComponents/player/player.js';
 
 
 // Render App
 function App() {
   // STATES
-  const [gameState, setGameState] = useState(0); // 0 : pseudo sel / 1 : lobby / 2 : in game
-  const [pseudo, setPseudo] = useState(""); // Pseudo
+  const [gameState, setGameState] = useState(2);      // 0 : pseudo sel / 1 : lobby / 2 : in game
+  const [pseudo, setPseudo] = useState("Pseudo1");    // Pseudo
+
   const [gamePlayed, setGamePlayed] = useState(null); // Game in progress or not (contains game id)
-  const [turn, setTurn] = useState(null); // Turn of the game
+  const [turn, setTurn] = useState(null);             // Turn of the game
+  const [pseudo2, setPseudo2] = useState("Pseudo2");  // Pseudo of adv
+  const [playerInd, setPlayerInd] = useState(1)    // Player index (1/2)
 
 
   // EFFECTS
@@ -84,7 +89,12 @@ function App() {
   } else { // IN GAME
     return (
       <div id="App">
+        <div id="blurWind"></div>
+
+        <Grid/>
         
+        <Player ind={1} self={playerInd === 1} pseudo={playerInd === 1 ? pseudo : pseudo2}/>
+        <Player ind={2} self={playerInd === 2} pseudo={playerInd === 2 ? pseudo : pseudo2}/>
       </div>
     );
   }

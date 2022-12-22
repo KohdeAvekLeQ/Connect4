@@ -7,7 +7,9 @@ let allIDs = [];
         player1: {pseudo: "", address: ""},
         player2: {pseudo: "", address: ""},
         board: [[]] // [y][x] -> null / 0 / 1 (0 = yellow / 1 = red),
-        turn: # // 1 / 2
+        turn: # // 1 / 2,
+        chat: [{exp: #, msg: ""}]  // exp : 1 / 2,
+        wins: [##, ##] // Wins history : player 1 [0] / player 2 [1]
     }
 */
 
@@ -45,7 +47,9 @@ function createGame(id, pl1, pl2) {
         player1: pl1,
         player2: pl2,
         board: emptyBoard(),
-        turn: ranTurn
+        turn: ranTurn,
+        chat: [],
+        wins: [0, 0]
     });
     allIDs.push(id);
 

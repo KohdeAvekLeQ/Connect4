@@ -1,0 +1,53 @@
+// Player display
+.Player {
+    position: absolute;
+    box-sizing: border-box;
+    width: 19vw;
+    height: 20vh;
+    text-align: center;
+    background-color: rgba(52, 52, 52, 0.7);
+    backdrop-filter: blur(var(--blurPlayer));
+    -webkit-backdrop-filter: blur(var(--blurPlayer));
+    border-bottom: 0.4vh solid var(--midTransparent);
+
+    // Left or right
+    &.left {
+        border-bottom-right-radius: 9vh;
+        border-right: 0.4vh solid var(--midTransparent);
+    }
+    &.right {
+        left: 81vw;
+        border-bottom-left-radius: 9vh;
+        border-left: 0.4vh solid var(--midTransparent);
+    }
+
+
+    // Pseudo disp
+    .playerPseudo {
+        display: block;
+        box-sizing: border-box;
+        width: 100%;
+        height: 30%;
+        overflow: hidden;
+        font-size: 4.5vh;
+        line-height: 5vh;
+        color: white;
+
+        // Player to play
+        &.self {
+            font-weight: bold;
+            font-size: 5vh;
+            line-height: 5.2vh;
+        }
+    }
+
+
+    // Div for chip
+    .chipDiv {
+        display: block;
+        box-sizing: border-box;
+        width: 13vh;
+        height: 13vh;
+        margin-left: calc(9.5vw - 6.5vh);
+    }
+}
