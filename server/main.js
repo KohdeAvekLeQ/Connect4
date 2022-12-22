@@ -13,6 +13,7 @@ const io = new Server({
 
 // API
 const LobbyAPI = require('./api/lobbyAPI.js');
+const Lobby = require('./lobby/lobby.js');
 
 
 // On new client
@@ -27,8 +28,13 @@ io.on("connection", (socket) => {
 
     // On disconnection
     socket.on("disconnect", () => {
+        // Disconnect msg
         let address = socket.handshake.address;
         console.log(`Client Disconnected : ${address}`);
+
+        // Delete if in lobby
+        Lobby.deleteByAddress(address);
+        lobbyAPI.updateLobby();
     });
 });
 

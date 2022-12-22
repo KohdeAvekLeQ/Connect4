@@ -15,6 +15,38 @@ code {
 
 
 
+/* No select */
+img {
+  pointer-events: none;
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-user-drag: none;
+}
+span {
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-user-drag: none;
+}
+h1 {
+  pointer-events: none;
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-user-drag: none;
+}
+h2 {
+  pointer-events: none;
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-user-drag: none;
+}
+label {
+  pointer-events: none;
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-user-drag: none;
+}
+
+
 /* Scrollbar */
 ::-webkit-scrollbar {
   width: 0.3vw;

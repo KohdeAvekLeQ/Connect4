@@ -1,25 +1,25 @@
+// Style
 import './setPseudo.scss';
 
+// React
 import {useEffect} from 'react';
+import useKeypress from 'react-use-keypress';
 
 
 export default function SetPseudo(data) {
-    // Effects
+    // EFFECT
     useEffect(() => {
-        // Keys
-        function keyEvents(event) {
-            if(event.key === "Enter" && data.pseudo.length > 2) {
-                data.validPseudo();
-            }
-        }
-        document.addEventListener('keydown', keyEvents);
-
-
-        // Cleanup
-        return(() => {
-            document.removeEventListener('keydown', keyEvents);
-        });
+        setTimeout(() => {
+            document.getElementById('inputPseudo').focus();
+        }, 0);
     }, []);
+
+    // KEYS
+    useKeypress('Enter', () => {
+        if(data.pseudo.length > 2) {
+            data.validPseudo();
+        }
+    });
 
 
     // Render 
@@ -27,8 +27,9 @@ export default function SetPseudo(data) {
         <div id="SetPseudo">
             <div id="titlePseudo"><span>Pseudo :</span></div>
 
-            <div id="inputPseudo">
+            <div id="inputPseudoDiv">
                 <input 
+                    id="inputPseudo"
                     type='text' 
                     placeholder='Entrez votre pseudo'
                     value={data.pseudo}
