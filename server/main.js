@@ -13,6 +13,9 @@ const io = new Server({
 
 // API
 const LobbyAPI = require('./api/lobbyAPI.js');
+const GameAPI = require('./api/gameAPI.js');
+
+// Modules
 const Lobby = require('./lobby/lobby.js');
 
 
@@ -24,6 +27,7 @@ io.on("connection", (socket) => {
 
     // APIs
     let lobbyAPI = new LobbyAPI(socket, io);
+    let gameAPI = new GameAPI(socket, io);
 
 
     // On disconnection
@@ -35,6 +39,8 @@ io.on("connection", (socket) => {
         // Delete if in lobby
         Lobby.deleteByAddress(address);
         lobbyAPI.updateLobby();
+
+        // Save if is in game
     });
 });
 

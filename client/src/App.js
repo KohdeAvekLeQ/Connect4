@@ -13,33 +13,54 @@ import SetPseudo from './lobbyComponents/setPseudo/setPseudo.js';
 
 // Render App
 function App() {
-  // States
+  // STATES
   const [gameState, setGameState] = useState(0); // 0 : pseudo sel / 1 : lobby / 2 : in game
-  const [pseudo, setPseudo] = useState("");
+  const [pseudo, setPseudo] = useState(""); // Pseudo
+  const [gamePlayed, setGamePlayed] = useState(null); // Game in progress or not (contains game id)
+  const [turn, setTurn] = useState(null); // Turn of the game
 
 
-  // Key actions
-  const keyPressHandler = (event) => {
-    if (event.code === "F5" || event.code === "F11" || event.code === "F12") return;
-    if (isShortcutLocked() && event.code !== "Enter") return;
-    if(event.ctrlKey && event.shiftKey && (event.key === 'i' || event.key === 'I')) return;
-  };
-  // Warning on unload
-  const unloadWarning = (event) => {
+  // EFFECTS
+  useEffect(() => {
+    // Socket functions
+    function onGameJoined(id, turn) {
+      setGamePlayed(id);
+      setGameState(2);
+      setTurn(turn);
+    } 
+
+    // Socket events
+    socket.on('gameLaunched', onGameJoined);
+  
+
+    // Keys
+    const keyPressHandler = (event) => {
+      if (event.code === "F5" || event.code === "F11" || event.code === "F12") return;
+      if (isShortcutLocked() && event.code !== "Enter") return;
+      if(event.ctrlKey && event.shiftKey && (event.key === 'i' || event.key === 'I')) return;
+    };
+    document.addEventListener("keydown", keyPressHandler);
+
+
+    // Before unload event
+    const unloadWarning = (event) => {
       let message = "Êtes vous sûr de vouloir fermer la page ?"
       socketReconnect();
       event.returnValue = message;
       return message;
-  };
-  // Events
-  useEffect(() => {
-      document.addEventListener("keydown", keyPressHandler);
-      window.addEventListener("beforeunload", unloadWarning);
+    };
+    window.addEventListener("beforeunload", unloadWarning);
 
-      return function cleanup() {
-          document.removeEventListener("keydown", keyPressHandler);
-          window.removeEventListener("beforeunload", unloadWarning);
-      };
+
+    // Cleanup on end
+    return function cleanup() {
+      // Socket
+      socket.off('gameLaunched', onGameJoined);
+
+      // Keys / Unload
+      document.removeEventListener("keydown", keyPressHandler);
+      window.removeEventListener("beforeunload", unloadWarning);
+    };
   });
 
 
@@ -61,7 +82,11 @@ function App() {
       </div>
     );
   } else { // IN GAME
-
+    return (
+      <div id="App">
+        
+      </div>
+    );
   }
 }
 export default App;

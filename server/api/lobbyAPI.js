@@ -1,5 +1,6 @@
 // Modules
 const Lobby = require('../lobby/lobby.js');
+const Game = require('../game/game.js');
 
 
 // Lobby API
@@ -29,6 +30,7 @@ module.exports = class LobbyAPI {
     getLobby() {
         this.socket.emit('setLobby', Lobby.getLobby());
     }
+    // Same but for all clients
     updateLobby() {
         this.io.sockets.emit('setLobby', Lobby.getLobby());
     }
@@ -37,7 +39,7 @@ module.exports = class LobbyAPI {
     // Create game
     createGame(pseudo) {
         let id = Math.floor(Math.random() * 10000000);
-        Lobby.addInLobby({pseudo: pseudo, address: this.socket.handshake.address, id: id});
+        Lobby.addInLobby({pseudo: pseudo, address: this.socket.handshake.address, id: id}, this.socket);
 
         this.socket.emit('gameCreated', id);
         this.updateLobby();
@@ -53,12 +55,30 @@ module.exports = class LobbyAPI {
 
 
     // Join a created game
-    joinGame(id) {
-        let game = Lobby.getLobbyGame(id);
+    joinGame(id, pseudo) {
+        let [game, socketP1] = Lobby.getLobbyGame(id);
 
         // Game exists
-        if(game !== null) {
+        if(game !== null && !Game.checkIfExists(id)) {
+            // Create new game
+            let turn = Game.createGame(game.id, 
+                {pseudo: game.pseudo, address: game.address}, 
+                {pseudo: pseudo, address: this.socket.handshake.address}
+            );
+
+            // Del from lobby
+            Lobby.deleteFromLobby(id);
+
+            // Delete if in lobby too
+            Lobby.deleteByAddress(this.socket.handshake.address);
+            this.updateLobby();
+
+            // Console
+            console.log(`Game launched : ${id} | Player 1 : ${game.pseudo} | Player 2 : ${pseudo} | Turn : ${turn}`);
             
+            // Send players
+            socketP1.emit('gameLaunched', id, turn);
+            this.socket.emit('gameLaunched', id, turn);
         }
     }
 }
