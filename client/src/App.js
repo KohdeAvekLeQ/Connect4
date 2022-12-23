@@ -34,7 +34,7 @@ function App() {
   const [wins, setWins] = useState([0, 0]);           // Wins in games
   const [won, setWon] = useState(false);              // Game ended
   const [winner, setWinner] = useState(null);         // Game winner
-  const [coordsWin, setCoords] = useState([[0, 0], [1, 1], [2, 2], [3, 3]]);        // Winning chips coordinates
+  const [coordsWin, setCoords] = useState([]);        // Winning chips coordinates
 
 
   // ---- EFFECTS ----
@@ -55,8 +55,10 @@ function App() {
 
       // Timeout to next game
       setTimeout(() => {
-        console.log('Send next game event');
-        socket.emit('sendNextGame', gamePlayed);
+        if(playerInd === 1) { // Only 1 player sends the event
+          socket.emit('sendNextGame', gamePlayed);
+        }
+
         setWon(false);
         setWinner(null);
         setCoords([]);
@@ -134,7 +136,7 @@ function App() {
       <div id="App">
         <div id="blurWind"></div>
 
-        <Grid socket={socket} turn={turn} gameID={gamePlayed} playerInd={playerInd} grid={grid} winning={coordsWin}/>
+        <Grid socket={socket} turn={turn} gameID={gamePlayed} playerInd={playerInd} grid={grid} winning={coordsWin} won={won}/>
         
         <Player ind={1} self={playerInd === 1} pseudo={playerInd === 1 ? pseudo : pseudo2}/>
         <Player ind={2} self={playerInd === 2} pseudo={playerInd === 2 ? pseudo : pseudo2}/>

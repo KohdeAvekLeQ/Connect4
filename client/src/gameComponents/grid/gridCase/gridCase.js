@@ -13,7 +13,7 @@ export default function GridCase(data) {
     // RENDER
     return (
         <div className='gridCaseContainer' onClick={data.caseClicked}>
-            <div className={'gridCase' + (data.color === null ? '' : ' filled')}>
+            <div className={'gridCase' + (data.color === null ? '' : ' filled') + (data.win ? ' winCase' : '')}>
                 <Chip color={data.color !== null ? colors[data.color] : ''}/>
             </div>
         </div>

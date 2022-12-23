@@ -25,5 +25,11 @@
         &.filled {
             border: none;
         }
+
+
+        // Winning case
+        &.winCase {
+            border: 1vh solid rgb(30, 255, 240);
+        }
     }   
 } 
