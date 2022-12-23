@@ -100,7 +100,7 @@ function playChip(gameID, playerID, x){
 } exports.playChip = playChip;
 
 function checkWin(gameID) {
-    return false;
+    return [false, null];
 }
 
 

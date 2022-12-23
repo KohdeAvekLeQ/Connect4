@@ -2,7 +2,7 @@
 .Player {
     position: absolute;
     box-sizing: border-box;
-    width: 17vw;
+    width: calc(0.9 * (50vw - 60vh));
     height: 20vh;
     text-align: center;
     background-color: rgba(52, 52, 52, 0.7);
@@ -16,7 +16,7 @@
         border-right: 0.4vh solid var(--midTransparent);
     }
     &.right {
-        left: 83vw;
+        left: calc(100vw - 0.9 * (50vw - 60vh));
         border-bottom-left-radius: 9vh;
         border-left: 0.4vh solid var(--midTransparent);
     }
@@ -48,13 +48,21 @@
         box-sizing: border-box;
         width: 13vh;
         height: 13vh;
-        margin-left: calc(8.5vw - 6.5vh);
+        margin-left: calc((0.9 * (50vw - 60vh))/2 - 6.5vh);
     }
 }
 
-
-@media (max-aspect-ratio: 14.5/9) {
+@media (max-aspect-ratio: 16/9) {
     .Player {
-        display: none;
+        width: calc(50vw - 60vh);
+
+        &.right {
+            left: calc(100vw - (50vw - 60vh));
+        }
+
+        // Div for chip
+        .chipDiv {
+            margin-left: calc((50vw - 60vh)/2 - 6.5vh);
+        }
     }
 }
