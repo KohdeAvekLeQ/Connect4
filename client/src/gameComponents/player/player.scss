@@ -16,7 +16,7 @@
         border-right: 0.4vh solid var(--midTransparent);
     }
     &.right {
-        left: calc(100vw - 0.9 * (50vw - 60vh));
+        right: 0;
         border-bottom-left-radius: 9vh;
         border-left: 0.4vh solid var(--midTransparent);
     }

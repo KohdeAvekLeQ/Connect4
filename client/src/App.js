@@ -14,6 +14,8 @@ import TurnDisplay from './gameComponents/turnDisplay/turnDisplay.js';
 import WinsDisplay from './gameComponents/winsDisplay/winsDisplay.js';
 import Chat from './interactComponents/chat/chat.js';
 import EndWindow from './interactComponents/endWindow/endWindow.js';
+import LeaveGame from './interactComponents/leaveGame/leaveGame';
+import ValidWindow from './interactComponents/validWindow/validWindow';
 
 
 // Render App
@@ -22,6 +24,7 @@ function App() {
   const [gameState, setGameState] = useState(0);      // 0 : pseudo sel / 1 : lobby / 2 : in game
   const [pseudo, setPseudo] = useState("");           // Pseudo
   const [lobbyChat, setLobbyChat] = useState([]);     // Lobby messages
+  const [validOpened, openValid] = useState(false);   // Validation window
 
   const [gamePlayed, setGamePlayed] = useState(null); // Game in progress or not (contains game id)
   const [turn, setTurn] = useState(null);             // Turn of the game
@@ -146,6 +149,9 @@ function App() {
         <Chat pseudo={pseudo} messages={messages} socket={socket} gameID={gamePlayed}/>
 
         <EndWindow opened={won} winnerInd={winner} winner={winner === playerInd ? pseudo : pseudo2}/>
+
+        <LeaveGame/>
+        <ValidWindow opened={true}/>
       </div>
     );
   }

@@ -3,7 +3,7 @@
     box-sizing: border-box;
     width: calc(50vw - 60vh);
     height: 75vh;
-    left: calc(50vw + 60vh);
+    right: 0;
     top: 21vh;
     z-index: 10;
 
@@ -135,7 +135,7 @@
     box-sizing: border-box;
     width: calc(50vw - 60vh);
     height: 8vh;
-    left: calc(50vw + 60vh);
+    right: 0;
     top: 92vh;
     background: linear-gradient(0deg, rgb(9, 128, 213) 0%, rgb(19, 8, 173) 100%);
     color: white;
@@ -143,4 +143,5 @@
     line-height: 7vh;
     cursor: pointer;
     border-radius: 0.8vh 0.8vh 0 0;
+    transition: 0.5s ease-in-out;
 }
