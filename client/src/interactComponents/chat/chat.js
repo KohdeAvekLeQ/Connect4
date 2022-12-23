@@ -17,13 +17,19 @@ export default function Chat(data) {
     // ---- FUNCTIONS ----
     function sendMessage() {
         if(msg.length > 1) {
-            data.socket.emit('sendMessage', data.gameID, data.pseudo, msg);
-            setMsg("");
+            if(data.lobby) {
+                data.socket.emit('sendLobbyChat', data.pseudo, msg);
+                setMsg("");
+            } else {
+                data.socket.emit('sendMessage', data.gameID, data.pseudo, msg);
+                setMsg("");    
+            }
         }
     }
     function unfoldPhone() {
         setFolded(false);
         setTimeout(() => {
+            document.getElementById('inputMsgElem').focus();
             let elem = document.getElementById('messages');
             elem.scrollTop = elem.scrollHeight;
         }, 0);

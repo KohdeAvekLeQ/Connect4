@@ -18,9 +18,10 @@ import Chat from './interactComponents/chat/chat.js';
 
 // Render App
 function App() {
-  // STATES
+  // ---- STATES ----
   const [gameState, setGameState] = useState(0);      // 0 : pseudo sel / 1 : lobby / 2 : in game
   const [pseudo, setPseudo] = useState("");           // Pseudo
+  const [lobbyChat, setLobbyChat] = useState([]);     // Lobby messages
 
   const [gamePlayed, setGamePlayed] = useState(null); // Game in progress or not (contains game id)
   const [turn, setTurn] = useState(null);             // Turn of the game
@@ -31,7 +32,7 @@ function App() {
   const [messages, setMessages] = useState([]);       // Game messages
 
 
-  // EFFECTS
+  // ---- EFFECTS ----
   useEffect(() => {
     // Socket functions
     function onGameJoined(id, turn, pseudoAdv, index) {
@@ -48,6 +49,7 @@ function App() {
     socket.on('setGrid', setGrid);
     socket.on('setWins', setWins);
     socket.on('setMessages', setMessages);
+    socket.on('setLobbyChat', setLobbyChat);
   
 
     // Keys
@@ -77,6 +79,7 @@ function App() {
       socket.off('setGrid', setGrid);
       socket.off('setWins', setWins);
       socket.off('setMessages', setMessages);
+      socket.off('setLobbyChat', setLobbyChat);
 
       // Keys / Unload
       document.removeEventListener("keydown", keyPressHandler);
@@ -85,7 +88,7 @@ function App() {
   });
 
 
-  // RENDER
+  // ---- RENDER ----
   if(gameState === 0) { // PSEUDO
     return (
       <div id="App">
@@ -100,6 +103,8 @@ function App() {
         <div id="blurWind"></div>
   
         <Lobby pseudo={pseudo} socket={socket} returnToPseudo={() => {setGameState(0);}}/>
+
+        <Chat pseudo={pseudo} messages={lobbyChat} socket={socket} lobby={true}/>
       </div>
     );
   } else { // IN GAME

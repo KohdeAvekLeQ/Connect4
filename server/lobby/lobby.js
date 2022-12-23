@@ -1,5 +1,6 @@
 let lobby = [];
 let sockets = [];
+let chat = [];
 
 
 // Get games lobby
@@ -43,3 +44,14 @@ function deleteByAddress(add) {
         sockets.splice(ind, 1);
     }
 } exports.deleteByAddress = deleteByAddress;
+
+
+function addMessage(pseudo, message) {
+    chat.push({sender: pseudo, content: message});
+
+    return chat;
+} exports.addMessage = addMessage;
+
+function getChat() {
+    return chat;
+} exports.getChat = getChat;

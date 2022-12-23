@@ -16,6 +16,7 @@ module.exports = class LobbyAPI {
         this.updateLobby = this.updateLobby.bind(this);
         this.deleteGame = this.deleteGame.bind(this);
         this.joinGame = this.joinGame.bind(this);
+        this.sendLobbyChat = this.sendLobbyChat.bind(this);
 
         
         // Socket events
@@ -23,12 +24,14 @@ module.exports = class LobbyAPI {
         this.socket.on('createGame', this.createGame);
         this.socket.on('deleteGame', this.deleteGame);
         this.socket.on('joinGame', this.joinGame);
+        this.socket.on('sendLobbyChat', this.sendLobbyChat);
     }
 
 
     // Get Lobby
     getLobby() {
         this.socket.emit('setLobby', Lobby.getLobby());
+        this.socket.emit('setLobbyChat', Lobby.getChat());
     }
     // Same but for all clients
     updateLobby() {
@@ -86,5 +89,12 @@ module.exports = class LobbyAPI {
             this.socket.emit('setGrid', Game.emptyBoard());
             this.socket.emit('setWins', [0, 0]);
         }
+    }
+
+
+    // Send lobby chat
+    sendLobbyChat(pseudo, message) {
+        let chat = Lobby.addMessage(pseudo, message);
+        this.io.sockets.emit('setLobbyChat', chat);
     }
 }
