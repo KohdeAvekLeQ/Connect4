@@ -77,7 +77,16 @@ function createGame(id, pl1, pl2, scks) {
 
 // Del game
 function deleteGame(id) {
-    games.splice(getGameIndex(id), 1);
+    let index = getGameIndex(id);
+    
+    // Send close event
+    let g = games[index];
+    for(let i = 0; i < g.sockets.length; i++) {
+        g.sockets[i].emit('goToLobby');
+    }
+
+    // Delete from list
+    games.splice(index, 1);
 } exports.deleteGame = deleteGame;
 
 

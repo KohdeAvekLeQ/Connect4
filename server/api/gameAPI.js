@@ -13,12 +13,14 @@ module.exports = class GameAPI {
         this.playChip = this.playChip.bind(this);
         this.sendMessage = this.sendMessage.bind(this);
         this.sendNextGame = this.sendNextGame.bind(this);
+        this.leaveGame = this.leaveGame.bind(this);
 
         
         // Socket events
         this.socket.on('playChip', this.playChip);
         this.socket.on('sendMessage', this.sendMessage);
         this.socket.on('sendNextGame', this.sendNextGame);
+        this.socket.on('leaveGame', this.leaveGame);
     }
 
     // Play a chip in game
@@ -52,5 +54,11 @@ module.exports = class GameAPI {
     sendNextGame(gameID) {
         Game.resetForNextGame(gameID);
         Game.updateGame(gameID);
+    }
+
+
+    // Leave a game
+    leaveGame(gameID) {
+        Game.deleteGame(gameID);
     }
 }

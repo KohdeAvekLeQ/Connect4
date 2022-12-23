@@ -66,6 +66,9 @@ function App() {
         setCoords([]);
       }, 3000);
     }
+    function dispLobby() {
+      setGameState(1);
+    }
     
     // Socket events
     socket.on('gameLaunched', onGameJoined);
@@ -75,6 +78,7 @@ function App() {
     socket.on('setMessages', setMessages);
     socket.on('setLobbyChat', setLobbyChat);
     socket.on('gameWon', onGameWon);
+    socket.on('goToLobby', dispLobby);
   
 
     // Keys
@@ -105,6 +109,7 @@ function App() {
       socket.off('setMessages', setMessages);
       socket.off('setLobbyChat', setLobbyChat);
       socket.off('gameWon', onGameWon);
+      socket.off('goToLobby', dispLobby);
 
       // Keys / Unload
       document.removeEventListener("keydown", keyPressHandler);
@@ -150,8 +155,8 @@ function App() {
 
         <EndWindow opened={won} winnerInd={winner} winner={winner === playerInd ? pseudo : pseudo2}/>
 
-        <LeaveGame/>
-        <ValidWindow opened={true}/>
+        <LeaveGame click={() => {openValid(true);}}/>
+        <ValidWindow opened={validOpened} gameID={gamePlayed} socket={socket} close={() => {openValid(false);}}/>
       </div>
     );
   }

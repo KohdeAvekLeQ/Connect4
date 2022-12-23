@@ -1,0 +1,63 @@
+#ValidWindow {
+    position: absolute;
+    box-sizing: border-box;
+    width: 20vw;
+    height: 20vh;
+    top: 40vh;
+    left: 40vw;
+    background-color: rgba(201, 201, 201, 0.9);
+    border-radius: 1vh;
+    padding: 1vh;
+    z-index: 11;
+
+    // Text
+    #validText {
+        display: block;
+        box-sizing: border-box;
+        width: 100%;
+        height: 60%;
+        font-size: 2.7vh;
+    }
+
+
+    // Btns
+    #validBtns {
+        display: block;
+        box-sizing: border-box;
+        width: 100%;
+        height: 36%;
+
+        button {
+            display: inline-block;
+            width: 45%;
+            height: 100%;
+            transition: 0.1s ease-in-out;
+            font-size: 3vh;
+            border-radius: 0.6vh;
+            color: white;
+            background-color: rgb(5, 190, 5);
+
+            &:hover {
+                background-color: rgb(7, 126, 7);
+            }
+            &:active {
+                font-size: 2.8vh;
+            }
+
+
+            // Cancel btn
+            &.cancel {
+                background-color: rgb(216, 10, 10);
+
+                &:hover {
+                    background-color: rgb(151, 4, 4);
+                }
+            }
+
+
+            &:first-child {
+                margin-right: 1vw;
+            }
+        }
+    }
+}

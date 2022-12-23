@@ -1,0 +1,22 @@
+#LeaveGame {
+    position: absolute;
+    box-sizing: border-box;
+    width: calc(0.8 * (50vw - 60vh));
+    height: 7vh;
+    top: 93vh;
+    left: calc(0.1 * (50vw - 60vh));
+    background-color: red;
+    border-radius: 1.5vh 1.5vh 0 0;
+    font-size: 5vh;
+    line-height: 7vh;
+    color: white;
+    cursor: pointer;
+
+    &:hover {
+        font-weight: bold;
+    }
+
+    &:active {
+        font-size: 4.5vh;
+    }
+}
