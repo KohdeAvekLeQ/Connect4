@@ -1,0 +1,23 @@
+#EndWindow {
+    position: absolute;
+    box-sizing: border-box;
+    width: 40vw;
+    height: 10vh;
+    top: 45vh;
+    left: 30vw;
+    font-size: 4vh;
+    border-radius: 2vh;
+    line-height: 8.5vh;
+    border: 0.5vh double black;
+    background-color: rgba(170, 170, 170, 0.9);
+
+
+    // Color of text
+    &.red {
+        background-color: var(--redDispTransp);
+    }
+
+    &.yellow {
+        background-color: var(--yellowDispTransp);
+    }
+}

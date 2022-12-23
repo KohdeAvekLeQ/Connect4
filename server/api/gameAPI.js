@@ -12,11 +12,13 @@ module.exports = class GameAPI {
         // Functions bind
         this.playChip = this.playChip.bind(this);
         this.sendMessage = this.sendMessage.bind(this);
+        this.sendNextGame = this.sendNextGame.bind(this);
 
         
         // Socket events
         this.socket.on('playChip', this.playChip);
         this.socket.on('sendMessage', this.sendMessage);
+        this.socket.on('sendNextGame', this.sendNextGame);
     }
 
     // Play a chip in game
@@ -43,5 +45,12 @@ module.exports = class GameAPI {
         for(let i = 0; i < sockets.length; i++) {
             sockets[i].emit('setMessages', chat);
         }
+    }
+
+
+    // Reset Variabled and set new game
+    sendNextGame(gameID) {
+        Game.resetForNextGame(gameID);
+        Game.updateGame(gameID);
     }
 }

@@ -14,6 +14,7 @@ import Player from './gameComponents/player/player.js';
 import TurnDisplay from './gameComponents/turnDisplay/turnDisplay.js';
 import WinsDisplay from './gameComponents/winsDisplay/winsDisplay.js';
 import Chat from './interactComponents/chat/chat.js';
+import EndWindow from './interactComponents/endWindow/endWindow.js';
 
 
 // Render App
@@ -28,8 +29,12 @@ function App() {
   const [pseudo2, setPseudo2] = useState("");         // Pseudo of adv
   const [playerInd, setPlayerInd] = useState(null);   // Player index (1/2)
   const [grid, setGrid] = useState([]);               // Game grid
-  const [wins, setWins] = useState([0, 0]);           // Wins in games
   const [messages, setMessages] = useState([]);       // Game messages
+
+  const [wins, setWins] = useState([0, 0]);           // Wins in games
+  const [won, setWon] = useState(false);              // Game ended
+  const [winner, setWinner] = useState(null);         // Game winner
+  const [coordsWin, setCoords] = useState([[0, 0], [1, 1], [2, 2], [3, 3]]);        // Winning chips coordinates
 
 
   // ---- EFFECTS ----
@@ -42,6 +47,21 @@ function App() {
       setPseudo2(pseudoAdv);
       setPlayerInd(index);
     } 
+    function onGameWon(winner, coords) {
+      // Set game won to show component
+      setWon(true);
+      setWinner(winner);
+      setCoords(coords);
+
+      // Timeout to next game
+      setTimeout(() => {
+        console.log('Send next game event');
+        socket.emit('sendNextGame', gamePlayed);
+        setWon(false);
+        setWinner(null);
+        setCoords([]);
+      }, 3000);
+    }
     
     // Socket events
     socket.on('gameLaunched', onGameJoined);
@@ -50,6 +70,7 @@ function App() {
     socket.on('setWins', setWins);
     socket.on('setMessages', setMessages);
     socket.on('setLobbyChat', setLobbyChat);
+    socket.on('gameWon', onGameWon);
   
 
     // Keys
@@ -80,6 +101,7 @@ function App() {
       socket.off('setWins', setWins);
       socket.off('setMessages', setMessages);
       socket.off('setLobbyChat', setLobbyChat);
+      socket.off('gameWon', onGameWon);
 
       // Keys / Unload
       document.removeEventListener("keydown", keyPressHandler);
@@ -112,7 +134,7 @@ function App() {
       <div id="App">
         <div id="blurWind"></div>
 
-        <Grid socket={socket} turn={turn} gameID={gamePlayed} playerInd={playerInd} grid={grid}/>
+        <Grid socket={socket} turn={turn} gameID={gamePlayed} playerInd={playerInd} grid={grid} winning={coordsWin}/>
         
         <Player ind={1} self={playerInd === 1} pseudo={playerInd === 1 ? pseudo : pseudo2}/>
         <Player ind={2} self={playerInd === 2} pseudo={playerInd === 2 ? pseudo : pseudo2}/>
@@ -122,8 +144,9 @@ function App() {
         <WinsDisplay pseudo={playerInd === 1 ? pseudo : pseudo2} pseudo2={playerInd === 2 ? pseudo : pseudo2} wins={wins}/>
 
         <Chat pseudo={pseudo} messages={messages} socket={socket} gameID={gamePlayed}/>
+
+        <EndWindow opened={won} winnerInd={winner} winner={winner === playerInd ? pseudo : pseudo2}/>
       </div>
     );
   }
-}
-export default App;
+} export default App;

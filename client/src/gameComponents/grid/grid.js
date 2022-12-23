@@ -9,7 +9,6 @@ import GridCase from './gridCase/gridCase.js';
 export default function Grid(data) {
     // ---- GAME FUNCTIONS ----
     function caseClicked(index) {
-        console.log(`PlayerID: ${data.playerInd} | Turn: ${data.turn}`);
         if(data.turn === data.playerInd) {
             // Coordonnées
             let x = index%7;
