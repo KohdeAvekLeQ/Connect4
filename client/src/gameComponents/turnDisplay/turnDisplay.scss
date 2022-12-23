@@ -39,7 +39,7 @@
 }
 
 
-@media (max-aspect-ratio: 16/9) {
+@media (max-aspect-ratio: 17/9) {
     #TurnDisplay {
         line-height: 4vh;
         padding-top: 2.5vh;
@@ -47,12 +47,5 @@
         &.other {
             padding-top: 0.7vh;
         }
-    }
-}
-
-
-@media (max-aspect-ratio: 14.5/9) {
-    #TurnDisplay {
-        display: none;
     }
 }

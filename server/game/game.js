@@ -273,7 +273,8 @@ function updateGame(gameID) {
     if(g.totalCases >= 42) {
         // Send update
         for(let i = 0; i < g.sockets.length; i++) {
-            g.sockets[i].emit('gameEquality');
+            g.sockets[i].emit('setGrid', g.board);
+            g.sockets[i].emit('gameWon', 0, []);
         }
     } else {
         // Check for win
