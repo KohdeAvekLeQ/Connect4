@@ -2,7 +2,7 @@
 .Player {
     position: absolute;
     box-sizing: border-box;
-    width: 19vw;
+    width: 17vw;
     height: 20vh;
     text-align: center;
     background-color: rgba(52, 52, 52, 0.7);
@@ -16,7 +16,7 @@
         border-right: 0.4vh solid var(--midTransparent);
     }
     &.right {
-        left: 81vw;
+        left: 83vw;
         border-bottom-left-radius: 9vh;
         border-left: 0.4vh solid var(--midTransparent);
     }
@@ -48,6 +48,13 @@
         box-sizing: border-box;
         width: 13vh;
         height: 13vh;
-        margin-left: calc(9.5vw - 6.5vh);
+        margin-left: calc(8.5vw - 6.5vh);
+    }
+}
+
+
+@media (max-aspect-ratio: 14.5/9) {
+    .Player {
+        display: none;
     }
 }

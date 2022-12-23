@@ -62,8 +62,9 @@ module.exports = class LobbyAPI {
         if(game !== null && !Game.checkIfExists(id)) {
             // Create new game
             let turn = Game.createGame(game.id, 
-                {pseudo: game.pseudo, address: game.address}, 
-                {pseudo: pseudo, address: this.socket.handshake.address}
+                {pseudo: game.pseudo, address: game.address},  // PLayer 1
+                {pseudo: pseudo, address: this.socket.handshake.address}, // Player 2
+                [socketP1, this.socket]
             );
 
             // Del from lobby
@@ -76,9 +77,12 @@ module.exports = class LobbyAPI {
             // Console
             console.log(`Game launched : ${id} | Player 1 : ${game.pseudo} | Player 2 : ${pseudo} | Turn : ${turn}`);
             
-            // Send players
-            socketP1.emit('gameLaunched', id, turn);
-            this.socket.emit('gameLaunched', id, turn);
+            // Send players informations
+            socketP1.emit('gameLaunched', id, turn, pseudo, 1);
+            socketP1.emit('setGrid', Game.emptyBoard());
+
+            this.socket.emit('gameLaunched', id, turn, game.pseudo, 2);
+            this.socket.emit('setGrid', Game.emptyBoard());
         }
     }
 }

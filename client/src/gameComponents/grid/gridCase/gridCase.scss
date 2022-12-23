@@ -1,0 +1,29 @@
+// Grid case container
+.gridCaseContainer {
+    display: inline-block;
+    box-sizing: border-box;
+    width: 16vh;
+    height: 16vh;
+    margin-right: 0.5vh;
+
+    // Remove margin on end of each line
+    &:nth-child(7n) {
+        margin-right: 0;
+    }
+
+
+    // Cases
+    .gridCase {
+        display: block;
+        box-sizing: border-box;
+        width: 100%;
+        height: 100%;
+        border: 0.5vh solid rgb(187, 187, 187);
+        border-radius: 30vh;
+
+        // Filled case
+        &.filled {
+            border: none;
+        }
+    }   
+} 
