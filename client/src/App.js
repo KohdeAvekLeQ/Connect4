@@ -4,7 +4,6 @@ import './App.scss';
 // Modules
 import {useState, useEffect} from 'react';
 import {socket, socketReconnect} from './socket/handler.js';
-import {isShortcutLocked} from './shortcutLocker.js';
 
 // Components
 import Lobby from './lobbyComponents/lobby/lobby.js';
@@ -78,7 +77,6 @@ function App() {
     // Keys
     const keyPressHandler = (event) => {
       if (event.code === "F5" || event.code === "F11" || event.code === "F12") return;
-      if (isShortcutLocked() && event.code !== "Enter") return;
       if(event.ctrlKey && event.shiftKey && (event.key === 'i' || event.key === 'I')) return;
     };
     document.addEventListener("keydown", keyPressHandler);
