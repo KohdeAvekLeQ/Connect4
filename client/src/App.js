@@ -12,6 +12,7 @@ import SetPseudo from './lobbyComponents/setPseudo/setPseudo.js';
 import Grid from './gameComponents/grid/grid.js';
 import Player from './gameComponents/player/player.js';
 import TurnDisplay from './gameComponents/turnDisplay/turnDisplay.js';
+import WinsDisplay from './gameComponents/winsDisplay/winsDisplay.js';
 
 
 // Render App
@@ -43,6 +44,7 @@ function App() {
     socket.on('gameLaunched', onGameJoined);
     socket.on('setTurn', setTurn);
     socket.on('setGrid', setGrid);
+    socket.on('setWins', setWins);
   
 
     // Keys
@@ -70,6 +72,7 @@ function App() {
       socket.off('gameLaunched', onGameJoined);
       socket.off('setTurn', setTurn);
       socket.off('setGrid', setGrid);
+      socket.off('setWins', setWins);
 
       // Keys / Unload
       document.removeEventListener("keydown", keyPressHandler);
@@ -106,6 +109,8 @@ function App() {
         <Player ind={2} self={playerInd === 2} pseudo={playerInd === 2 ? pseudo : pseudo2}/>
 
         <TurnDisplay playerInd={playerInd} turn={turn}/>
+
+        <WinsDisplay pseudo={playerInd === 1 ? pseudo : pseudo2} pseudo2={playerInd === 2 ? pseudo : pseudo2} wins={wins}/>
       </div>
     );
   }

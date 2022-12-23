@@ -80,9 +80,11 @@ module.exports = class LobbyAPI {
             // Send players informations
             socketP1.emit('gameLaunched', id, turn, pseudo, 1);
             socketP1.emit('setGrid', Game.emptyBoard());
+            socketP1.emit('setWins', [0, 0]);
 
             this.socket.emit('gameLaunched', id, turn, game.pseudo, 2);
             this.socket.emit('setGrid', Game.emptyBoard());
+            this.socket.emit('setWins', [0, 0]);
         }
     }
 }
