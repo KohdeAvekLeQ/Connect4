@@ -20,10 +20,12 @@ export default function ValidWindow(data) {
 
     // ---- KEYS ----
     useKeyPress(['Enter', 'Escape'], (event) => {
-        if(event.key === 'Escape') {
-            close();
-        } else {
-            valid();
+        if(data.opened) {
+            if(event.key === 'Escape') {
+                close();
+            } else {
+                valid();
+            }
         }
     });
 

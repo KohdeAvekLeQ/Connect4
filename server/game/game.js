@@ -1,5 +1,6 @@
 let games = [];
 let allIDs = [];
+let playersJoined = [];
 /*
     Format of games :
     {
@@ -13,6 +14,11 @@ let allIDs = [];
         sockets: [],
         totalCases: #  // Total of cases placed
     }
+
+    Players joined :
+    [
+        {address : '', gameID: ###}
+    ]
 */
 
 // Create an empty board
@@ -50,6 +56,10 @@ function maxHeight(board, x) {
     return max;
 }
 
+function deleteFromIPList(gameID) {
+    playersJoined = playersJoined.filter(pl => pl.gameID !== gameID);
+}
+
 
 // ---- CREATION / DELETION ----
 // Create new game
@@ -70,6 +80,7 @@ function createGame(id, pl1, pl2, scks) {
         totalCases: 0
     });
     allIDs.push(id);
+    playersJoined.push({address: pl1.address, gameID: id}, {address: pl2.address, gameID: id});
 
     // Return turn
     return ranTurn;
@@ -84,6 +95,9 @@ function deleteGame(id) {
     for(let i = 0; i < g.sockets.length; i++) {
         g.sockets[i].emit('goToLobby');
     }
+
+    // Delete from list
+    deleteFromIPList(id);
 
     // Delete from list
     games.splice(index, 1);
@@ -323,3 +337,29 @@ function resetForNextGame(gameID) {
 
     return ranTurn;    
 } exports.resetForNextGame = resetForNextGame;
+
+
+// ---- RECONNECTION ----
+function wasInGame(address) {
+    let filt = playersJoined.filter(pl => pl.address === address);
+
+    if(filt.length > 0) {
+        return filt[0].gameID;
+    } else {
+        return null;
+    }
+} exports.wasInGame = wasInGame;
+
+function recoverGame(gameID, socket) {
+    let index = getGameIndex(gameID);
+    let g = games[index];
+    let address = socket.handshake.address;
+
+    if(g.player1.address === address) {
+        socket.emit('recoverData', gameID, g.player1.pseudo, g.player2.pseudo, g.turn, g.chat, g.board, g.wins, 1);
+        games[index].sockets[0] = socket;
+    } else {
+        socket.emit('recoverData', gameID, g.player2.pseudo, g.player1.pseudo, g.turn, g.chat, g.board, g.wins, 2);
+        games[index].sockets[1] = socket;
+    }
+} exports.recoverGame = recoverGame;

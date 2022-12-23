@@ -69,6 +69,18 @@ function App() {
     function dispLobby() {
       setGameState(1);
     }
+    function recoverData(id, pseudo, pseudo2, turn, chat, grid, wins, playerInd) {
+      console.log('DATA RECOVERED');
+      setGamePlayed(id);
+      setPlayerInd(playerInd);
+      setPseudo(pseudo);
+      setPseudo2(pseudo2);
+      setTurn(turn);
+      setMessages(chat);
+      setGrid(grid);
+      setWins(wins);
+      setGameState(2);
+    }
     
     // Socket events
     socket.on('gameLaunched', onGameJoined);
@@ -79,6 +91,7 @@ function App() {
     socket.on('setLobbyChat', setLobbyChat);
     socket.on('gameWon', onGameWon);
     socket.on('goToLobby', dispLobby);
+    socket.on('recoverData', recoverData);
   
 
     // Keys
@@ -110,6 +123,7 @@ function App() {
       socket.off('setLobbyChat', setLobbyChat);
       socket.off('gameWon', onGameWon);
       socket.off('goToLobby', dispLobby);
+      socket.off('recoverData', recoverData);
 
       // Keys / Unload
       document.removeEventListener("keydown", keyPressHandler);

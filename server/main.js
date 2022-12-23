@@ -17,6 +17,7 @@ const GameAPI = require('./api/gameAPI.js');
 
 // Modules
 const Lobby = require('./lobby/lobby.js');
+const Game = require('./game/game.js');
 
 
 // On new client
@@ -28,6 +29,14 @@ io.on("connection", (socket) => {
     // APIs
     let lobbyAPI = new LobbyAPI(socket, io);
     let gameAPI = new GameAPI(socket, io);
+
+
+    // Check if was in game
+    let gID = Game.wasInGame(socket.handshake.address);
+    if(gID !== null) {
+        console.log(`Player ${socket.handshake.address} was in game ${gID}`);
+        Game.recoverGame(gID, socket);
+    }
 
 
     // On disconnection
