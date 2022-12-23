@@ -13,6 +13,7 @@ import Grid from './gameComponents/grid/grid.js';
 import Player from './gameComponents/player/player.js';
 import TurnDisplay from './gameComponents/turnDisplay/turnDisplay.js';
 import WinsDisplay from './gameComponents/winsDisplay/winsDisplay.js';
+import Chat from './interactComponents/chat/chat.js';
 
 
 // Render App
@@ -25,8 +26,9 @@ function App() {
   const [turn, setTurn] = useState(null);             // Turn of the game
   const [pseudo2, setPseudo2] = useState("");         // Pseudo of adv
   const [playerInd, setPlayerInd] = useState(null);   // Player index (1/2)
-  const [grid, setGrid] = useState([]);
+  const [grid, setGrid] = useState([]);               // Game grid
   const [wins, setWins] = useState([0, 0]);           // Wins in games
+  const [messages, setMessages] = useState([]);       // Game messages
 
 
   // EFFECTS
@@ -45,6 +47,7 @@ function App() {
     socket.on('setTurn', setTurn);
     socket.on('setGrid', setGrid);
     socket.on('setWins', setWins);
+    socket.on('setMessages', setMessages);
   
 
     // Keys
@@ -73,6 +76,7 @@ function App() {
       socket.off('setTurn', setTurn);
       socket.off('setGrid', setGrid);
       socket.off('setWins', setWins);
+      socket.off('setMessages', setMessages);
 
       // Keys / Unload
       document.removeEventListener("keydown", keyPressHandler);
@@ -111,6 +115,8 @@ function App() {
         <TurnDisplay playerInd={playerInd} turn={turn}/>
 
         <WinsDisplay pseudo={playerInd === 1 ? pseudo : pseudo2} pseudo2={playerInd === 2 ? pseudo : pseudo2} wins={wins}/>
+
+        <Chat pseudo={pseudo} messages={messages} socket={socket} gameID={gamePlayed}/>
       </div>
     );
   }

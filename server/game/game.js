@@ -104,6 +104,20 @@ function checkWin(gameID) {
 }
 
 
+// ---- MESSAGES ----
+function addMessage(gameID, pseudo, message) {
+    games[getGameIndex(gameID)].chat.push({
+        sender: pseudo,
+        content: message
+    });
+
+    // Send new chat
+    let g = games[getGameIndex(gameID)];
+
+    return [g.chat, g.sockets];
+} exports.addMessage = addMessage;
+
+
 // ---- UPDATE ----
 function updateGame(gameID) {
     // Check for win

@@ -11,10 +11,12 @@ module.exports = class GameAPI {
 
         // Functions bind
         this.playChip = this.playChip.bind(this);
+        this.sendMessage = this.sendMessage.bind(this);
 
         
         // Socket events
         this.socket.on('playChip', this.playChip);
+        this.socket.on('sendMessage', this.sendMessage);
     }
 
     // Play a chip in game
@@ -28,6 +30,18 @@ module.exports = class GameAPI {
                 // Send update
                 Game.updateGame(gameID);
             }
+        }
+    }
+
+
+    // Message sent
+    sendMessage(gameID, pseudo, message) {
+        // Get new chat
+        let [chat, sockets] = Game.addMessage(gameID, pseudo, message);
+
+        // Send to players
+        for(let i = 0; i < sockets.length; i++) {
+            sockets[i].emit('setMessages', chat);
         }
     }
 }
